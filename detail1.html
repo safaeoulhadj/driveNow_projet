@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveNow - Détails Voiture</title>
+    
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Rubik&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .car-detail-header {
+            background-color: #2B2E4A;
+            color: white;
+            padding: 60px 0 40px;
+            margin-bottom: 50px;
+        }
+        
+        .car-gallery {
+            margin-bottom: 30px;
+        }
+        
+        .main-image {
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .main-image img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s;
+        }
+        
+        .main-image img:hover {
+            transform: scale(1.02);
+        }
+        
+        .thumbnail-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .thumbnail {
+            width: 80px;
+            height: 60px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .thumbnail:hover {
+            border-color: #75564d;
+        }
+        
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .car-info h2 {
+            color: #2B2E4A;
+            font-family: 'Oswald', sans-serif;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        
+        .price-tag {
+            font-size: 24px;
+            color: #75564d;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .price-tag span {
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+        
+        .features-list li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .features-list i {
+            color: #75564d;
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .booking-card {
+            background-color: #F4F5F8;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .booking-card h3 {
+            color: #2B2E4A;
+            margin-bottom: 20px;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-control {
+            height: 50px;
+            border-radius: 3px;
+            border: 1px solid #ddd;
+        }
+        
+        .btn-book {
+            background-color: #75564d;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-weight: 600;
+            text-transform: uppercase;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .btn-book:hover {
+            background-color: #2B2E4A;
+            color: white;
+        }
+        
+        .specs-table {
+            width: 100%;
+            margin-bottom: 30px;
+            border-collapse: collapse;
+        }
+        
+        .specs-table tr:nth-child(even) {
+            background-color: #F4F5F8;
+        }
+        
+        .specs-table td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+        }
+        
+        .specs-table td:first-child {
+            font-weight: 600;
+            color: #2B2E4A;
+            width: 40%;
+        }
+        
+        .related-cars {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+        
+        .related-cars h3 {
+            color: #2B2E4A;
+            font-family: 'Oswald', sans-serif;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+        
+        .related-car-item {
+            margin-bottom: 30px;
+            transition: all 0.3s;
+        }
+        
+        .related-car-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .related-car-item img {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .related-car-item h4 {
+            color: #2B2E4A;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .related-car-price {
+            color: #75564d;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Topbar Start -->
+    <div class="container-fluid py-3 px-lg-5 d-none d-lg-block" style="background-color: #2B2E4A;">
+        <div class="row justify-content-end">
+            <div class="col-auto">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-white px-3" href="connexion.html">Sign in</a>
+                    <span class="text-white">|</span>
+                    <a class="text-white px-3" href="inscription.html">Inscription</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+    <!-- Navbar Start -->
+    <div class="container-fluid position-relative nav-bar p-0">
+        <div class="position-relative px-lg-5" style="z-index: 9;">
+            <nav class="navbar navbar-expand-lg bg-light navbar-dark py-3 py-lg-0 pl-3 pl-lg-5">
+                <a href="" class="navbar-brand">
+                    <img src="LOGO.png" alt="" width="170px">
+                </a>
+                <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
+                    <div class="navbar-nav ml-auto py-0">
+                        <a href="index.html" class="nav-item nav-link">Home</a>
+                        <a href="about.html" class="nav-item nav-link">About</a>
+                        <a href="service.html" class="nav-item nav-link">Services</a>
+                        <a href="car.html" class="nav-item nav-link">Cars</a>
+                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Page Header Start -->
+    <div class="container-fluid car-detail-header">
+        <div class="container">
+            <h1 class="display-3 text-uppercase text-white mb-3">Mercedes-Benz Classe C</h1>
+            <div class="d-inline-flex text-white">
+                <h6 class="text-uppercase m-0"><a class="text-white" href="index.html">Home</a></h6>
+                <h6 class="text-white m-0 px-3">/</h6>
+                <h6 class="text-uppercase m-0"><a class="text-white" href="car.html">Cars</a></h6>
+                <h6 class="text-white m-0 px-3">/</h6>
+                <h6 class="text-uppercase text-white m-0">Mercedes-Benz Classe C</h6>
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+    <!-- Car Detail Start -->
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+                <!-- Left Column - Car Images -->
+                <div class="col-lg-7">
+                    <div class="car-gallery">
+                        <div class="main-image">
+                            <img src="img/car-rent-1.png" alt="Mercedes-Benz Classe C" id="mainImage">
+                        </div>
+                        <div class="thumbnail-container">
+                            <div class="thumbnail" onclick="changeImage('img/car-rent-1.png')">
+                                <img src="img/car-rent-1.png" alt="Vue avant">
+                            </div>
+                            <div class="thumbnail" onclick="changeImage('img/car-rent-2.png')">
+                                <img src="img/car-rent-2.png" alt="Vue arrière">
+                            </div>
+                            <div class="thumbnail" onclick="changeImage('img/car-rent-3.png')">
+                                <img src="img/car-rent-3.png" alt="Intérieur">
+                            </div>
+                            <div class="thumbnail" onclick="changeImage('img/car-rent-4.png')">
+                                <img src="img/car-rent-4.png" alt="Tableau de bord">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="car-info">
+                        <h2>Description</h2>
+                        <p>La Mercedes-Benz Classe C allie luxe, performance et technologie de pointe. Avec son design élégant et son intérieur raffiné, cette berline premium offre une expérience de conduite inégalée.</p>
+                        
+                        <h2 class="mt-5">Caractéristiques techniques</h2>
+                        <table class="specs-table">
+                            <tr>
+                                <td>Marque</td>
+                                <td>Mercedes-Benz</td>
+                            </tr>
+                            <tr>
+                                <td>Modèle</td>
+                                <td>Classe C 220d</td>
+                            </tr>
+                            <tr>
+                                <td>Année</td>
+                                <td>2023</td>
+                            </tr>
+                            <tr>
+                                <td>Moteur</td>
+                                <td>2.0L Diesel, 194 ch</td>
+                            </tr>
+                            <tr>
+                                <td>Transmission</td>
+                                <td>Automatique 9G-TRONIC</td>
+                            </tr>
+                            <tr>
+                                <td>Consommation</td>
+                                <td>5.1 L/100km</td>
+                            </tr>
+                            <tr>
+                                <td>Nombre de places</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>Couleur</td>
+                                <td>Noir</td>
+                            </tr>
+                        </table>
+                        
+                        <h2>Équipements</h2>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check"></i> Climatisation automatique bi-zone</li>
+                            <li><i class="fas fa-check"></i> Système audio premium Burmester</li>
+                            <li><i class="fas fa-check"></i> Ecran tactile 10.25"</li>
+                            <li><i class="fas fa-check"></i> Navigation GPS</li>
+                            <li><i class="fas fa-check"></i> Sièges en cuir chauffants</li>
+                            <li><i class="fas fa-check"></i> Caméra de recul</li>
+                            <li><i class="fas fa-check"></i> Régulateur de vitesse adaptatif</li>
+                            <li><i class="fas fa-check"></i> Aide au maintien de voie</li>
+                            <li><i class="fas fa-check"></i> Freinage d'urgence autonome</li>
+                            <li><i class="fas fa-check"></i> Toit panoramique</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Right Column - Booking Form -->
+                <div class="col-lg-5">
+                    <div class="booking-card">
+                        <h3>Réserver ce véhicule</h3>
+                        <div class="price-tag">
+                            450 DH <span>/ jour</span>
+                        </div>
+                        
+                        <form>
+                            <div class="form-group">
+                                <label>Lieu de prise en charge</label>
+                                <select class="form-control">
+                                    <option>Agence Casablanca</option>
+                                    <option>Agence Rabat</option>
+                                    <option>Agence Marrakech</option>
+                                    <option>Agence Tanger</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Lieu de restitution</label>
+                                <select class="form-control">
+                                    <option>Agence Casablanca</option>
+                                    <option>Agence Rabat</option>
+                                    <option>Agence Marrakech</option>
+                                    <option>Agence Tanger</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Date de prise en charge</label>
+                                    <input type="date" class="form-control">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Heure</label>
+                                    <input type="time" class="form-control">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Date de restitution</label>
+                                    <input type="date" class="form-control">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Heure</label>
+                                    <input type="time" class="form-control">
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-book">Réserver maintenant</button>
+                        </form>
+                    </div>
+                    
+                    <div class="contact-info mt-4 p-4" style="background-color: #F4F5F8; border-radius: 5px;">
+                        <h4><i class="fas fa-phone-alt mr-2"></i> Besoin d'aide ?</h4>
+                        <p class="mb-2">Notre équipe est disponible 24/7 pour répondre à vos questions.</p>
+                        <p class="mb-0"><strong>Téléphone:</strong> +212 6 37 56 67 76</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Related Cars -->
+            <div class="related-cars">
+                <h3>Véhicules similaires</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="related-car-item">
+                            <img src="img/car-rent-2.png" alt="BMW Série 3">
+                            <h4>BMW Série 3</h4>
+                            <div class="related-car-price">420 DH / jour</div>
+                            <a href="car-detail-bmw.html" class="btn btn-sm mt-2" style="background-color: #75564d; color: white;">Voir détails</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="related-car-item">
+                            <img src="img/car-rent-3.png" alt="Audi A4">
+                            <h4>Audi A4</h4>
+                            <div class="related-car-price">400 DH / jour</div>
+                            <a href="car-detail-audi.html" class="btn btn-sm mt-2" style="background-color: #75564d; color: white;">Voir détails</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="related-car-item">
+                            <img src="img/car-rent-4.png" alt="Volkswagen Passat">
+                            <h4>Volkswagen Passat</h4>
+                            <div class="related-car-price">380 DH / jour</div>
+                            <a href="car-detail-vw.html" class="btn btn-sm mt-2" style="background-color: #75564d; color: white;">Voir détails</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Car Detail End -->
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-secondary py-5 px-sm-3 px-md-5" style="margin-top: 90px;">
+        <div class="row pt-5">
+            <div class="col-lg-3 col-md-6 mb-5">
+                <h4 class="text-uppercase text-light mb-4">Get In Touch</h4>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-white mr-3"></i>errachidia</p>
+                <p class="mb-2"><i class="fa fa-phone-alt text-white mr-3"></i>+212 6 37 56 67 76</p>
+                <p><i class="fa fa-envelope text-white mr-3"></i>driveNow@example.com</p>
+                <h6 class="text-uppercase text-white py-2">Follow Us</h6>
+                <div class="d-flex justify-content-start">
+                    <a class="btn btn-lg btn-dark btn-lg-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-lg btn-dark btn-lg-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-lg btn-dark btn-lg-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-lg btn-dark btn-lg-square" href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 mb-2">
+                <h4 class="text-uppercase text-light mb-4">Links</h4>
+                <div class="d-flex flex-column justify-content-start">
+                    <a class="text-body mb-2" href="index.html"><i class="fa fa-angle-right text-white mr-2"></i>Home</a>
+                    <a class="text-body mb-2" href="about.html"><i class="fa fa-angle-right text-white mr-2"></i>About</a>
+                    <a class="text-body mb-2" href="service.html"><i class="fa fa-angle-right text-white mr-2"></i>Services</a>
+                    <a class="text-body mb-2" href="car.html"><i class="fa fa-angle-right text-white mr-2"></i>Cars</a>
+                    <a class="text-body" href="contact.html"><i class="fa fa-angle-right text-white mr-2"></i>Contact</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-5">
+                <h4 class="text-uppercase text-light mb-4">Car Gallery</h4>
+                <div class="row mx-n1">
+                    <div class="col-4 px-1 mb-2">
+                        <a href=""><img class="w-100" src="img/gallery-1.jpg" alt=""></a>
+                    </div>
+                    <div class="col-4 px-1 mb-2">
+                        <a href=""><img class="w-100" src="img/gallery-2.jpg" alt=""></a>
+                    </div>
+                    <div class="col-4 px-1 mb-2">
+                        <a href=""><img class="w-100" src="img/gallery-3.jpg" alt=""></a>
+                    </div>
+                    <div class="col-4 px-1 mb-2">
+                        <a href=""><img class="w-100" src="img/gallery-4.jpg" alt=""></a>
+                    </div>
+                    <div class="col-4 px-1 mb-2">
+                        <a href=""><img class="w-100" src="img/gallery-5.jpg" alt=""></a>
+                    </div>
+                    <div class="col-4 px-1 mb-2">
+                        <a href=""><img class="w-100" src="img/gallery-6.jpg" alt=""></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-5">
+                <h4 class="text-uppercase text-light mb-4">Newsletter</h4>
+                <p class="mb-4">Volup amet magna clita tempor. Tempor sea eos vero ipsum. Lorem lorem sit sed elitr sed kasd et</p>
+                <div class="w-100 mb-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-dark border-dark" style="padding: 25px;" placeholder="Your Email">
+                        <div class="input-group-append">
+                            <button class="btn btn-light text-uppercase px-3">Sign Up</button>
+                        </div>
+                    </div>
+                </div>
+                <i>Lorem sit sed elitr sed kasd et</i>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+    
+    <script>
+        function changeImage(imageSrc) {
+            document.getElementById('mainImage').src = imageSrc;
+        }
+    </script>
+</body>
+</html>
